@@ -1,22 +1,14 @@
 class Api::V1::ArtistsController <  Api::BaseController  
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
 
-  # GET /artists
-  # GET /artists.json
+  # GET /api/artists
   def index
     @artists = Artist.all
     
     render json: @artists
   end
 
-  # GET /artists/1
-  # GET /artists/1.json
-  def show
-    render json: @artist
-  end
-
-  # POST /artists
-  # POST /artists.json
+  # POST /api/artists
   def create
     @artist = Artist.new(artist_params)
 
@@ -27,8 +19,7 @@ class Api::V1::ArtistsController <  Api::BaseController
     end
   end
 
-  # PATCH/PUT /artists/1
-  # PATCH/PUT /artists/1.json
+  # PATCH/PUT /api/artists/1
   def update
     if @artist.update(artist_params)
       head :no_content
@@ -37,8 +28,7 @@ class Api::V1::ArtistsController <  Api::BaseController
     end
   end
 
-  # DELETE /artists/1
-  # DELETE /artists/1.json
+  # DELETE /api/artists/1
   def destroy
     @artist.destroy
 
