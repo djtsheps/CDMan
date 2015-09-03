@@ -2,23 +2,14 @@ class Api::V1::AlbumsController < Api::BaseController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
 
 
-  # GET /albums
-  # GET /albums.json
+  # GET /api/albums
   def index
     @albums = Album.all
     
     render json: @albums
   end
 
-  # GET /albums/1
-  # GET /albums/1.json
-  def show
-    render json: @album 
-  end
-
-
-  # POST /albums
-  # POST /albums.json
+  # POST /api/albums
   def create
     @album = Album.new(album_params)
 
@@ -29,8 +20,7 @@ class Api::V1::AlbumsController < Api::BaseController
     end
   end
 
-  # PATCH/PUT /albums/1
-  # PATCH/PUT /albums/1.json
+  # PATCH/PUT /api/albums/1
   def update
     if @album.update(album_params)
       head :no_content
@@ -40,8 +30,7 @@ class Api::V1::AlbumsController < Api::BaseController
     end
   end
 
-  # DELETE /albums/1
-  # DELETE /albums/1.json
+  # DELETE /api/albums/1
   def destroy
     @album.destroy
     

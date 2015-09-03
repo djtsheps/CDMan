@@ -1,66 +1,40 @@
 class Api::V1::TracksController <  Api::BaseController  
   before_action :set_track, only: [:show, :edit, :update, :destroy]
 
-  # GET /tracks
-  # GET /tracks.json
+  # GET /api/tracks
   def index
     @tracks = Track.all
 
-    respond_to do |format|
-      format.json { render json: @tracks }
-    end
+    render json: @tracks
   end
 
-  # GET /tracks/1
-  # GET /tracks/1.json
-  def show
-    respond_to do |format|
-      format.json { render json: @track }
-    end
-  end
-
-  # GET /tracks/new
-  def new
-    @track = Track.new
-  end
-
-  # GET /tracks/1/edit
-  def edit
-  end
-
-  # POST /tracks
-  # POST /tracks.json
+  # POST /api/tracks
   def create
     @track = Track.new(track_params)
 
     respond_to do |format|
       if @track.save
-        format.json { render :show, status: :created, location: @track }
+        render :show, status: :created, location: @track
       else
-        format.json { render json: @track.errors, status: :unprocessable_entity }
+        render json: @track.errors, status: :unprocessable_entity
       end
     end
   end
 
-  # PATCH/PUT /tracks/1
-  # PATCH/PUT /tracks/1.json
+  # PATCH/PUT /api/tracks/1
   def update
-    respond_to do |format|
-      if @track.update(track_params)
-        format.json { render :show, status: :ok, location: @track }
-      else
-        format.json { render json: @track.errors, status: :unprocessable_entity }
-      end
+    if @track.update(track_params)
+      head :no_content
+    else
+      render json: @track.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /tracks/1
-  # DELETE /tracks/1.json
+  # DELETE /api/tracks/1
   def destroy
     @track.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+
+    head :no_content 
   end
 
   private
