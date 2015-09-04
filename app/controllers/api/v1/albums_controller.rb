@@ -45,6 +45,6 @@ class Api::V1::AlbumsController < Api::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def album_params
-      params.require(:album).permit(:title, :artist_id, :year)
+      params.require(:album).permit(:title, :year)
     end
 end

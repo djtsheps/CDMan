@@ -45,6 +45,6 @@ class Api::V1::TracksController <  Api::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:title, :artist_id, :album_id, :year, :genre)
+      params.require(:track).permit(:title, :year, :genre)
     end
 end
