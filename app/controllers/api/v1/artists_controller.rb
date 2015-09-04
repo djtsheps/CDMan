@@ -8,6 +8,11 @@ class Api::V1::ArtistsController <  Api::BaseController
     render json: @artists
   end
 
+  # GET /api/artists/1
+  def show
+    render json: @artist
+  end
+
   # POST /api/artists
   def create
     @artist = Artist.new(artist_params)
@@ -38,7 +43,11 @@ class Api::V1::ArtistsController <  Api::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_artist
-      @artist = Artist.find(params[:id])
+      begin
+        @artist = Artist.find(params[:id])
+      rescue ActiveRecord::RecordNotFound  => e
+        render :json => {error: 'record not found'}, status: :not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -8,6 +8,11 @@ class Api::V1::TracksController <  Api::BaseController
     render json: @tracks
   end
 
+  # GET /api/tracks/1
+  def show
+    render json: @track
+  end
+
   # POST /api/tracks
   def create
     @track = Track.new(track_params)
@@ -40,7 +45,11 @@ class Api::V1::TracksController <  Api::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_track
-      @track = Track.find(params[:id])
+      begin
+        @track = Track.find(params[:id])
+      rescue ActiveRecord::RecordNotFound  => e
+         render :json => {error: 'record not found'}, status: :not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

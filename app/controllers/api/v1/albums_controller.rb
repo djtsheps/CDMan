@@ -1,12 +1,16 @@
 class Api::V1::AlbumsController < Api::BaseController  
   before_action :set_album, only: [:show, :edit, :update, :destroy]
 
-
   # GET /api/albums
   def index
     @albums = Album.all
     
     render json: @albums
+  end
+
+  # GET /api/albums/1
+  def show
+    render json: @album
   end
 
   # POST /api/albums
@@ -40,7 +44,11 @@ class Api::V1::AlbumsController < Api::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_album
-      @album = Album.find(params[:id])
+      begin
+        @album = Album.find(params[:id])
+      rescue ActiveRecord::RecordNotFound  => e
+         render :json => {error: 'record not found'}, status: :not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
