@@ -5,10 +5,34 @@ class Api::V1::AlbumsController < Api::BaseController
     param :id, :number, "Album id", :required => true
   end
 
+  def_param_group :album_details do
+    param :album, Hash do
+      param :title, String, "Album title"
+      param :year, :number, "Album year"
+    end
+  end
+
+  def_param_group :required_album_details do
+    param :album, Hash do
+      param :title, String, "Album title", :required => true
+      param :year, :number, "Album year", :required => true
+    end
+  end
+
   resource_description do
     short 'Site Albums'
     formats ['json']
     error 404, "Record Not Found"
+    error 422, "Unprocessable Entity"
+  end
+
+  api :GET, '/search/albums', "Get all albums filtered by search parameters"
+  param :title, String, "Album title"
+  # GET /api/search/albums
+  def search
+    @albums = Album.where("title like :title",title: "%#{params[:title]}%")
+    
+    render json: @albums
   end
 
   api :GET, '/albums', "Get all albums"
@@ -27,12 +51,13 @@ class Api::V1::AlbumsController < Api::BaseController
   end
 
   api :POST, "/albums", "Create an album"
+  param_group :required_album_details
   # POST /api/albums
   def create
     @album = Album.new(album_params)
 
     if @album.save
-      render json: @album, status: :created, location: @album
+      render json: @album, status: :created
     else
       render json: @album.errors, status: :unprocessable_entity
     end
@@ -40,6 +65,7 @@ class Api::V1::AlbumsController < Api::BaseController
 
   api :PUT, "/albums/:id", "Update album details"
   param_group :id
+  param_group :album_details
   # PATCH/PUT /api/albums/1
   def update
     if @album.update(album_params)

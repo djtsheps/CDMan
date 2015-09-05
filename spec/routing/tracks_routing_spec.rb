@@ -7,16 +7,8 @@ RSpec.describe Api::V1::TracksController, type: :routing do
       expect(:get => "/api/tracks").to route_to("api/v1/tracks#index",:format => :json)
     end
 
-    it "routes to #new" do
-      expect(:get => "/api/tracks/new").to route_to("api/v1/tracks#new",:format => :json)
-    end
-
     it "routes to #show" do
       expect(:get => "/api/tracks/1").to route_to("api/v1/tracks#show", :id => "1",:format => :json)
-    end
-
-    it "routes to #edit" do
-      expect(:get => "/api/tracks/1/edit").to route_to("api/v1/tracks#edit", :id => "1",:format => :json)
     end
 
     it "routes to #create" do
@@ -33,6 +25,14 @@ RSpec.describe Api::V1::TracksController, type: :routing do
 
     it "routes to #destroy" do
       expect(:delete => "/api/tracks/1").to route_to("api/v1/tracks#destroy", :id => "1",:format => :json)
+    end
+
+    it "routes to #search/tracks" do
+      expect(:get => "/api/search/tracks").to route_to(:action => "search",:controller => "api/v1/tracks",:format => :json)
+    end
+
+    it "routes to #search/tracks" do
+      expect(:post => "/api/albums/1/artists/1/tracks").to route_to(:action => "create_with_album_and_artist",:controller => "api/v1/tracks",:format => :json,  "album_ids"=>"1", "artist_ids"=>"1")
     end
 
   end

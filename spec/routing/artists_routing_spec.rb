@@ -7,16 +7,8 @@ RSpec.describe Api::V1::ArtistsController, type: :routing do
       expect(:get => "/api/artists").to route_to("api/v1/artists#index",:format => :json)
     end
 
-    it "routes to #new" do
-      expect(:get => "/api/artists/new").to route_to("api/v1/artists#new",:format => :json)
-    end
-
     it "routes to #show" do
       expect(:get => "/api/artists/1").to route_to("api/v1/artists#show", :id => "1",:format => :json)
-    end
-
-    it "routes to #edit" do
-      expect(:get => "/api/artists/1/edit").to route_to("api/v1/artists#edit", :id => "1",:format => :json)
     end
 
     it "routes to #create" do
@@ -33,6 +25,10 @@ RSpec.describe Api::V1::ArtistsController, type: :routing do
 
     it "routes to #destroy" do
       expect(:delete => "/api/artists/1").to route_to("api/v1/artists#destroy", :id => "1",:format => :json)
+    end
+
+    it "routes to #search/artists" do
+      expect(:get => "/api/search/artists").to route_to(:action => "search",:controller => "api/v1/artists",:format => :json)
     end
 
   end

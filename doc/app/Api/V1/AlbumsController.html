@@ -76,6 +76,8 @@
     
     <li ><a href="#method-i-index">#index</a>
     
+    <li ><a href="#method-i-search">#search</a>
+    
     <li ><a href="#method-i-show">#show</a>
     
     <li ><a href="#method-i-update">#update</a>
@@ -133,12 +135,12 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 31</span>
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@album</span> = <span class="ruby-constant">Album</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">album_params</span>)
 
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@album</span>.<span class="ruby-identifier">save</span>
-    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@album</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:created</span>, <span class="ruby-identifier">location</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@album</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@album</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:created</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@album</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:unprocessable_entity</span>
   <span class="ruby-keyword">end</span>
@@ -172,7 +174,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@album</span>.<span class="ruby-identifier">destroy</span>
   
@@ -207,9 +209,44 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@albums</span> = <span class="ruby-constant">Album</span>.<span class="ruby-identifier">all</span>
+  
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@albums</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /api/search/albums</p>
+          
+          
+
+          
+          <div class="method-source-code" id="search-source">
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span>
+  <span class="ruby-ivar">@albums</span> = <span class="ruby-constant">Album</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;title like :title&quot;</span>,<span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;%#{params[:title]}%&quot;</span>)
   
   <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@albums</span>
 <span class="ruby-keyword">end</span></pre>
@@ -242,7 +279,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 25</span>
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
   <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@album</span>
 <span class="ruby-keyword">end</span></pre>
@@ -275,7 +312,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 44</span>
+            <pre><span class="ruby-comment"># File app/controllers/api/v1/albums_controller.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@album</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">album_params</span>)
     <span class="ruby-identifier">head</span> <span class="ruby-value">:no_content</span>
