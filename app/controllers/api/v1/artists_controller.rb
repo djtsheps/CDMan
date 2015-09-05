@@ -1,6 +1,17 @@
 class Api::V1::ArtistsController <  Api::BaseController  
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
 
+  def_param_group :id do
+    param :id, :number, "Artist id", :required => true
+  end
+
+  resource_description do
+    short 'Site Artists'
+    formats ['json']
+    error 404, "Record Not Found"
+  end
+
+  api :GET, '/artists', "Get all artists"
   # GET /api/artists
   def index
     @artists = Artist.all
@@ -8,11 +19,15 @@ class Api::V1::ArtistsController <  Api::BaseController
     render json: @artists
   end
 
+  api :GET, "/artists/:id", "Show artist details by :id"
+  param_group :id
   # GET /api/artists/1
   def show
     render json: @artist
   end
 
+  api :POST, "/artists", "Create an artist"
+  param_group :id
   # POST /api/artists
   def create
     @artist = Artist.new(artist_params)
@@ -24,6 +39,8 @@ class Api::V1::ArtistsController <  Api::BaseController
     end
   end
 
+  api :PUT, "/artists/:id", "Update artist details"
+  param_group :id
   # PATCH/PUT /api/artists/1
   def update
     if @artist.update(artist_params)
@@ -33,6 +50,8 @@ class Api::V1::ArtistsController <  Api::BaseController
     end
   end
 
+  api :DELETE, "/artists/:id", "Delete artist by :id"
+  param_group :id
   # DELETE /api/artists/1
   def destroy
     @artist.destroy
