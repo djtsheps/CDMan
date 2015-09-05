@@ -4,9 +4,17 @@ Rails.application.routes.draw do
   apipie
   namespace :api, defaults: {format: :json} do
     scope module: :v1, constraints: ApiConstraints.new(version: '1', default: true) do
-      resources :tracks
-      resources :albums
-      resources :artists
+      resources :tracks, only: [:index, :show, :create, :update, :destroy]
+      resources :albums, only: [:index, :show, :create, :update, :destroy]
+      resources :artists,only: [:index, :show, :create, :update, :destroy]
+
+      # Searching routes 
+      get "search/tracks", controller: 'tracks', action: 'search'
+      get "search/albums", controller: 'albums', action: 'search'
+      get "search/artists", controller: 'artists', action: 'search'
+
+      # Creatin tracks against an album
+      post "albums/:album_ids/artists/:artist_ids/tracks", controller: 'tracks', action: 'create_with_album_and_artist', as: 'create_with_album_and_artist'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

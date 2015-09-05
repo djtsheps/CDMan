@@ -5,10 +5,37 @@ class Api::V1::ArtistsController <  Api::BaseController
     param :id, :number, "Artist id", :required => true
   end
 
+  def_param_group :artist_details do
+    param :artist, Hash do
+      param :lastname, String, "Artist lastname"
+      param :firstname, String, "Artist firstname"
+      param :aka, String, "Artist alias (Also Known As)"
+    end
+  end
+
+  def_param_group :required_artist_details do
+    param :artist, Hash do
+      param :lastname, String, "Artist lastname", :required => true
+      param :firstname, String, "Artist firstname", :required => true
+      param :aka, String, "Artist alias (Also Known As)", :required => true
+    end
+  end
+
   resource_description do
     short 'Site Artists'
     formats ['json']
     error 404, "Record Not Found"
+    error 422, "Unprocessable Entity"
+  end
+
+  api :GET, '/search/artists', "Get all artists filtered by search parameters"
+  param :firstname, String, "Artist firstname"
+  param :lastname, String, "Artist lastname"
+  # GET /api/search/artists
+  def search
+    @artists = Artist.where("firstname like :firstname AND lastname like :lastname AND aka like :aka",firstname: "%#{params[:firstname]}%",lastname: "%#{params[:lastname]}%",aka: "%#{params[:aka]}%")
+    
+    render json: @artists
   end
 
   api :GET, '/artists', "Get all artists"
@@ -27,13 +54,13 @@ class Api::V1::ArtistsController <  Api::BaseController
   end
 
   api :POST, "/artists", "Create an artist"
-  param_group :id
+  param_group :required_artist_details
   # POST /api/artists
   def create
     @artist = Artist.new(artist_params)
 
     if @artist.save
-      render :show, status: :created, location: @artist
+      render json: @artist, status: :created
     else
       render json: @artist.errors, status: :unprocessable_entity
     end
@@ -41,6 +68,7 @@ class Api::V1::ArtistsController <  Api::BaseController
 
   api :PUT, "/artists/:id", "Update artist details"
   param_group :id
+  param_group :artist_details
   # PATCH/PUT /api/artists/1
   def update
     if @artist.update(artist_params)

@@ -24,5 +24,9 @@ RSpec.describe Api::V1::AlbumsController, type: :routing do
       expect(:delete => "/api/albums/1").to route_to("api/v1/albums#destroy", :id => "1",:format => :json)
     end
 
+    it "routes to #search/albums" do
+      expect(:get => "/api/search/albums").to route_to(:action => "search",:controller => "api/v1/albums",:format => :json)
+    end
+
   end
 end
