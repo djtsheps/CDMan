@@ -1,6 +1,6 @@
 == README
 
-This is a CD Management Application
+#This is a CD Management Application
 
 ## Ruby version
 <b>Ruby-2.2.3</b>
