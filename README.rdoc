@@ -1,22 +1,27 @@
 == README
 
-#This is a CD Management Application
+==This is a CD Management Application
 
-## Ruby version
+===Ruby version
+
 <b>Ruby-2.2.3</b>
 
 
-## Database 
+===Database 
 
-## API Docs
+===API Docs
 
 
-## Installing 
+===Installing 
+
 <tt>git clone git@github.com:djtsheps/CDMan.git</tt>
+
 <tt>cd CDMan</tt>
+
 <tt>bundle install</tt>
 
-## Running tests
+===Running tests
+
 <tt>bundle exec rake</tt>
 
 
