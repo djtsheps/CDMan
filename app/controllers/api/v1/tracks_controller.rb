@@ -1,6 +1,17 @@
 class Api::V1::TracksController <  Api::BaseController  
   before_action :set_track, only: [:show, :edit, :update, :destroy]
 
+  def_param_group :id do
+    param :id, :number, "Track id", :required => true
+  end
+
+  resource_description do
+    short 'Site Tracks'
+    formats ['json']
+    error 404, "Record Not Found"
+  end
+
+  api :GET, '/tracks', "Get all tracks"
   # GET /api/tracks
   def index
     @tracks = Track.all
@@ -8,11 +19,15 @@ class Api::V1::TracksController <  Api::BaseController
     render json: @tracks
   end
 
+  api :GET, "/tracks/:id", "Show track details by :id"
+  param_group :id
   # GET /api/tracks/1
   def show
     render json: @track
   end
 
+  api :POST, "/tracks", "Create a track"
+  param_group :id
   # POST /api/tracks
   def create
     @track = Track.new(track_params)
@@ -26,6 +41,8 @@ class Api::V1::TracksController <  Api::BaseController
     end
   end
 
+  api :PUT, "/tracks/:id", "Update track details"
+  param_group :id
   # PATCH/PUT /api/tracks/1
   def update
     if @track.update(track_params)
@@ -35,6 +52,8 @@ class Api::V1::TracksController <  Api::BaseController
     end
   end
 
+  api :DELETE, "/tracks/:id", "Delete track by :id"
+  param_group :id
   # DELETE /api/tracks/1
   def destroy
     @track.destroy
