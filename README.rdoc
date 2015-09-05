@@ -1,5 +1,3 @@
-== README
-
 ==This is a CD Management Application
 
 ===Ruby version
