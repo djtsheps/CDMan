@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Apipie-rails is a DSL and Rails engine for documenting your RESTful API
-gem 'apipie-rails'
+gem 'apipie-rails', github: 'Apipie/apipie-rails', ref: '928bd858fd14ec67eeb9483ba0d43b3be8339608'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -47,6 +47,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'railroady'
 end
 
 group :development do
