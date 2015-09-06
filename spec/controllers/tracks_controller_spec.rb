@@ -1,6 +1,14 @@
 require 'rails_helper'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
 
 RSpec.describe Api::V1::TracksController, type: :controller do
+
+  before(:each) do
+    DatabaseCleaner.clean
+  end 
+
   let(:valid_attributes) {
     attributes_for(:track)
   }

@@ -49,6 +49,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'railroady'
+  gem 'database_cleaner'
 end
 
 group :development do
