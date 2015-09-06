@@ -9,13 +9,15 @@ class Api::V1::TracksController <  Api::BaseController
     param :title, String, "Track title"
     param :year, :number, "Year in which track was produced"
     param :genre, String, "Track genre"
+    param :number, :number, "Track number"
   end
 
   def_param_group :required_track_details do
-    param :track, Hash do
+    param :track,  Hash do
       param :title, String, "Track title", :required => true
       param :year, :number, "Year in which track was produced", :required => true
       param :genre, String, "Track genre", :required => true
+      param :number, :number, "Track number", :required => true
     end
   end
 
@@ -24,6 +26,7 @@ class Api::V1::TracksController <  Api::BaseController
       param :title, String, "Track title", :required => true
       param :year, :number, "Year in which track was produced", :required => true
       param :genre, String, "Track genre", :required => true
+      param :number, :number, "Track number", :required => true
     end
     param :album_ids, String, "Album id(s) .e.g 1,2... ", :required => true
     param :artist_ids, String, "Artist id(s) .e.g 3,4,5...", :required => true
@@ -84,10 +87,10 @@ end
     @track.artists << @artists
     @track.albums << @albums
 
-    if @track.errors.count == 0 && @track.save
-      render json: @track, status: :created
-    else
+    if @track.errors.count != 0 || !@track.save
       render json: @track.errors, status: :unprocessable_entity
+    else 
+      render json: @track, status: :created
     end
   end
 
@@ -124,7 +127,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:title, :year, :genre)
+      params.require(:track).permit(:title, :year, :genre, :number)
     end
 
     # Lookup album ids
