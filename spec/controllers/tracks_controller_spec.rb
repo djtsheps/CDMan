@@ -60,11 +60,32 @@ RSpec.describe Api::V1::TracksController, type: :controller do
   
   describe "POST #/api/albums/1/artists/1/tracks => create_with_album_and_artist" do
     it "saves given track and its details" do
-      track  = Track.create! valid_attributes
       album  = Album.create! album_valid_attributes
       artist = Artist.create! artist_valid_attributes
       get :create_with_album_and_artist, {controller: 'api/v1/tracks', action: 'show', artist_ids: artist.id,album_ids: album.id ,track: valid_attributes}
-      expect(assigns(:track).title).to eq(track.title)
+      expect(assigns(:track).id).to eq(1)
+    end 
+
+    it "does not saves given track and its details if there are no valid :artist_ids" do
+      album  = Album.create! album_valid_attributes
+      artist = Artist.create! artist_valid_attributes
+      get :create_with_album_and_artist, {controller: 'api/v1/tracks', action: 'show', artist_ids: 3,album_ids: album.id ,track: valid_attributes}
+      expect(assigns(:track).id).to eq(nil)
+    end 
+
+    it "does not saves given track and its details if there are no valid :album_ids" do
+      album  = Album.create! album_valid_attributes
+      artist = Artist.create! artist_valid_attributes
+      get :create_with_album_and_artist, {controller: 'api/v1/tracks', action: 'show', artist_ids: artist.id,album_ids: 5 ,track: valid_attributes}
+      expect(assigns(:track).id).to eq(nil)
+    end 
+
+
+    it "returns no album_ids and artist_ids found errors when incorrect album_ids and artist_ids are given" do
+      album  = Album.create! album_valid_attributes
+      artist = Artist.create! artist_valid_attributes
+      get :create_with_album_and_artist, {controller: 'api/v1/tracks', action: 'show', artist_ids: 4,album_ids: 5 ,track: valid_attributes}
+      expect(assigns(:track).errors.to_a).to eq(["Artist ids no artist(s) found","Album ids no album(s) found"])
     end 
 
     it "assigns given album to track" do
