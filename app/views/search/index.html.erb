@@ -1,0 +1,20 @@
+<% @title = "Search" %>
+<div>
+<row>
+<div>
+
+<%= form_tag search_path, :method => 'get', :enforce_utf8 => false do %>
+<div class="col-lg-11 col-sm-11">
+  <%= text_field_tag :query, params[:query], placeholder: 'Enter a search query...', :class => 'form-control', :autofocus => true %>
+  </div>
+  <div class="col-lg-1 col-sm-1">
+  <%= submit_tag(value = "Search", :class => "btn btn-primary btn-mini" ) %>
+  </div>
+<% end %>
+</div>
+</row>
+</div>
+</br>
+<%= render 'artists/index' %>
+<%= render 'albums/index' %>
+<%= render 'tracks/index' %>

@@ -1,0 +1,29 @@
+<%- model_class = Album -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %> Details</h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:year) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @albums.each do |album| %>
+      <tr>
+        <td><%= link_to album.id, album_path(album) %></td>
+        <td><%= album.title %></td>
+        <td><%= album.year %></td>
+        <td><%=l album.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'tracks/index' %>
+
+<%= link_to 'Go Back', :back, class: 'btn btn-primary btn-large pull-right' %>
+
