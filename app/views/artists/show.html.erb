@@ -1,0 +1,31 @@
+<%- model_class = Artist -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %> Details</h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:firstname) %></th>
+      <th><%= model_class.human_attribute_name(:lastname) %></th>
+      <th><%= model_class.human_attribute_name(:aka) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @artists.each do |artist| %>
+      <tr>
+        <td><%= link_to artist.id, artist_path(artist) %></td>
+        <td><%= artist.firstname %></td>
+        <td><%= artist.lastname %></td>
+        <td><%= artist.aka %></td>
+        <td><%=l artist.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'tracks/index' %>
+
+<%= link_to 'Go Back', :back, class: 'btn btn-primary btn-large pull-right' %>
+

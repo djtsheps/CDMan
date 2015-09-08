@@ -1,6 +1,17 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  get 'home/index'
+  root 'home#index'                                                                                                                                                                                         
+  get '/search' => 'search#index', as: 'search'
+
+  get 'search/index'
+
+  get 'home/index'
+
+  resources :tracks, only: [:show]
+  resources :artists, only: [:show]
+  resources :albums, only: [:show]
   apipie
   namespace :api, defaults: {format: :json} do
     scope module: :v1, constraints: ApiConstraints.new(version: '1', default: true) do
