@@ -25,6 +25,9 @@
         </td>
       </tr>
     <% end %>
+    <% if @albums_message %> 
+      <tr><td colspan=42 class='text-center'><%= @albums_message %></td></tr>
+    <% end %>
   </tbody>
 </table>
 
